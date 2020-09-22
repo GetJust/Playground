@@ -43,7 +43,5 @@ jobs:
         shell: pwsh
         run: |
           ./.sonar/scanner/dotnet-sonarscanner begin /k:"GetJust_Playground" /o:"getjust" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          pushd './src/Just.Test.Functions'
-          dotnet build -c Release
-          popd
+          dotnet build -c Release ./src/Just.Test.Functions/Just.Test.Functions.sln
           ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

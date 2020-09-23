@@ -43,7 +43,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: pwsh
         run: |
-          ./.sonar/scanner/dotnet-sonarscanner begin /k:"GetJust_Playground" /o:"getjust" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          ./.sonar/scanner/dotnet-sonarscanner begin /k:"GetJust_Playground" /o:"getjust" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="./src/Just.Test.Functions/Just.Test.Functions.Tests/coverage.opencover.xml"
           dotnet build -c Release ./src/Just.Test.Functions/Just.Test.Functions.sln
           dotnet test ./src/Just.Test.Functions/Just.Test.Functions.sln /p:CollectCoverage=true /p:Threshold=30 /p:ThresholdType=line /p:CoverletOutputFormat=opencover
           ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

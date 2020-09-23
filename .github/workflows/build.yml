@@ -36,7 +36,7 @@ jobs:
         shell: pwsh
         run: |
           New-Item -Path ./.codecov/tool -ItemType Directory
-          dotnet tool install -g codecov.tool --tool-path ./.codecov/tool
+          dotnet tool install codecov.tool --tool-path ./.codecov/tool
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

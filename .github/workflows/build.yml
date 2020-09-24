@@ -65,4 +65,4 @@ jobs:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         shell: bash
         run: |
-          bash <(curl -Ls https://coverage.codacy.com/get.sh) report
+          bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ./src/Just.Test.Functions/Just.Test.Functions.Tests/coverage.opencover.xml

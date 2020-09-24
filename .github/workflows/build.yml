@@ -37,7 +37,7 @@ jobs:
       #   run: |
       #     New-Item -Path ./.codecov/tool -ItemType Directory
       #     dotnet tool install codecov.tool --tool-path ./.codecov/tool
-      - name: Build and analyze
+      - name: Build and Test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -59,10 +59,3 @@ jobs:
       #   with:
       #     project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
       #     coverage-reports: ./src/Just.Test.Functions/Just.Test.Functions.Tests/coverage.opencover.xml
-      - name: Publish test results
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        shell: bash
-        run: |
-          bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r ./src/Just.Test.Functions/Just.Test.Functions.Tests/coverage.opencover.xml

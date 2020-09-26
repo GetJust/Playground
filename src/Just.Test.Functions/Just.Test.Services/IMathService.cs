@@ -1,4 +1,4 @@
-﻿namespace Just.Test.Functions.Services
+﻿namespace Just.Test.Services
 {
 	public interface IMathService
 	{

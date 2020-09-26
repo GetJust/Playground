@@ -32,30 +32,13 @@ jobs:
         run: |
           New-Item -Path ./.sonar/scanner -ItemType Directory
           dotnet tool install dotnet-sonarscanner --tool-path ./.sonar/scanner
-      # - name: Install Codecov tool
-      #   shell: pwsh
-      #   run: |
-      #     New-Item -Path ./.codecov/tool -ItemType Directory
-      #     dotnet tool install codecov.tool --tool-path ./.codecov/tool
       - name: Build and Test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: pwsh
         run: |
-          ./.sonar/scanner/dotnet-sonarscanner begin /k:"GetJust_Playground" /o:"getjust" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="./src/Just.Test.Functions/Just.Test.Functions.Tests/coverage.opencover.xml"
+          ./.sonar/scanner/dotnet-sonarscanner begin /k:"GetJust_Playground" /o:"getjust" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="${{ github.workspace }}./results/coverage.opencover.xml"
           dotnet build -c Release ./src/Just.Test.Functions/Just.Test.Functions.sln
-          dotnet test ./src/Just.Test.Functions/Just.Test.Functions.sln /p:CollectCoverage=true /p:Threshold=30 /p:ThresholdType=line /p:CoverletOutputFormat=opencover
+          dotnet test ./src/Just.Test.Functions/Just.Test.Functions.sln /p:CollectCoverage=true /p:Threshold=80 /p:ThresholdType=line /p:CoverletOutputFormat=opencover /p:CoverletOutput='${{ github.workspace }}./results/'
           ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-      # - name: Publish unit test results
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      #   shell: pwsh
-      #   run: |
-      #     ./.codecov/tool/codecov -f ./src/Just.Test.Functions/Just.Test.Functions.Tests/coverage.opencover.xml -t ${{ secrets.CODECOV_TOKEN }}
-      # - name: Run codacy-coverage-reporter
-      #   uses: codacy/codacy-coverage-reporter-action@master
-      #   with:
-      #     project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-      #     coverage-reports: ./src/Just.Test.Functions/Just.Test.Functions.Tests/coverage.opencover.xml

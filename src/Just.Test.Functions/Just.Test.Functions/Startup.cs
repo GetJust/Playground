@@ -1,5 +1,5 @@
 ﻿using Just.Test.Functions;
-using Just.Test.Functions.Services;
+using Just.Test.Services;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
